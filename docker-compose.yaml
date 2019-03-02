@@ -1,0 +1,24 @@
+version: '3'
+services: 
+  haste:
+    image: haste
+    depends_on:
+      - redis
+    container_name: haste
+    networks:
+      - mypvtnet
+    ports:
+      - "8000:80"
+    restart: always
+  redis:
+    image: redis:alpine
+    command: redis-server --appendonly yes
+    container_name: redisServer
+    networks:
+      - mypvtnet
+    volumes:
+      - /data:/data
+    restart: always
+networks:
+  mypvtnet:
+    driver: bridge
